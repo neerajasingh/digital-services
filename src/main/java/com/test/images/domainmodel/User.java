@@ -86,7 +86,7 @@ public class User {
 	}
 
 	public void setImages(List<Image> images) {
-		this.images = images;
+		this.images.addAll(images);
 	}
 
 	public String getUserName() {
