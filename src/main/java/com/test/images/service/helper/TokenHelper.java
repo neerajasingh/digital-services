@@ -58,7 +58,6 @@ public class TokenHelper {
 		try {
 			JsonNode jsonNode = mapper.readTree(tokenResponse);
 			token = jsonNode.get("access_token").asText();
-			System.out.println("Access Token: " + token);
 
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
