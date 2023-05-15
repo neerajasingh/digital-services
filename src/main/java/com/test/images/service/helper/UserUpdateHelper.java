@@ -1,22 +1,20 @@
 package com.test.images.service.helper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.test.images.domainmodel.Image;
 import com.test.images.domainmodel.User;
-import com.test.images.error.ServiceException;
-import com.test.images.exception.handler.ErrorCodes;
 import com.test.images.repository.ImageRepository;
 import com.test.images.repository.UserRepository;
 
@@ -71,21 +69,10 @@ public class UserUpdateHelper {
 
 	}
 
+	@Transactional
 	public void deleteImage(final String deleteHash, final Long userId) {
 
-		Optional<User> optionalUser = userRepository.findById(userId);
-		User user = null;
-		if (optionalUser.isPresent()) {
-			user = optionalUser.get();
-			List<Image> images = user.getImages().stream().filter(img -> !img.getDeleteHash().equals(deleteHash))
-					.collect(Collectors.toList());
-			user.setImages(images);
-		} else {
-			throw new ServiceException(ErrorCodes.NOT_FOUND, "No user found for userId " + deleteHash,
-					HttpStatusCode.valueOf(404));
-		}
-
-		userRepository.saveAndFlush(user);
+		imageRepository.deleteAllByDeleteHashIn(new ArrayList<String>(Arrays.asList(deleteHash)));
 
 	}
 

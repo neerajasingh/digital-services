@@ -13,5 +13,5 @@ public interface UserService {
 
 	Optional<User> getUserById(Long userId);
 
-	void deleteImages(List<Long> imagesToDelete);
+	void deleteImages(List<String> imagesToDelete);
 }

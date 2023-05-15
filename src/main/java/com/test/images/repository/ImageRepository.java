@@ -29,6 +29,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 	 * 
 	 * @param ids A list of IDs of Images that are to be deleted
 	 */
-	public void deleteAllByIdIn(List<Long> ids);
+	public void deleteAllByDeleteHashIn(List<String> ids);
 
 }

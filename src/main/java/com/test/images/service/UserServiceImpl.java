@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 	 */
 
 	@Override
-	public void deleteImages(List<Long> imagesToDelete) {
-		imageRepository.deleteAllByIdIn(imagesToDelete);
+	public void deleteImages(List<String> imagesToDelete) {
+		imageRepository.deleteAllByDeleteHashIn(imagesToDelete);
 	}
 }
